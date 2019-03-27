@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import { getGreeting } from '@/utils/utils';
 import Container from '@/components/Container/Container';
+import Card, { CardBody } from '@/components/Card/Card';
 import { app } from './App.module.scss';
 
 const App = () => {
@@ -10,10 +11,21 @@ const App = () => {
     document.title = getGreeting(currentHour);
   }, []);
 
+  const TestCard = () => (
+    <Card>
+      <CardBody>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      </CardBody>
+    </Card>
+  );
+
   return (
     <div className={app}>
       <Container>
-        <h1>Hello World!</h1>
+        <TestCard />
+        <TestCard />
+        <TestCard />
+        <TestCard />
       </Container>
     </div>
   );
