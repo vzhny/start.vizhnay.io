@@ -1,23 +1,45 @@
 @import '~@/styles/scss/partials/variables';
 @import '~@/styles/scss/partials/abstracts';
 
+$drawer-bg: #33384d;
+
 .sideMenuDrawer {
+  visibility: hidden;
   position: absolute;
   top: 0;
   right: 0;
   height: 100vh;
   width: 300px;
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  background-color: #33384d;
+  background-color: $drawer-bg;
   color: $white;
   z-index: 999;
   transition: all 500ms;
 }
 
+.sideMenuButton {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid $white;
+  background-color: $drawer-bg;
+  color: $white;
+  margin-bottom: 1rem;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    background-color: $white;
+    color: $drawer-bg;
+    transition: all 200ms ease-in;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
 .closed {
-  visibility: visible;
   transform: translate3d(100%, 0, 0);
 }
 
