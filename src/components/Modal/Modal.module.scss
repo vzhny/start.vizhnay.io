@@ -1,0 +1,34 @@
+@import '~@/styles/scss/partials/variables';
+@import '~@/styles/scss/partials/abstracts';
+
+.modal {
+  visibility: hidden;
+  position: absolute;
+  transition: all 500ms;
+  z-index: 999;
+}
+
+.closed {
+  opacity: 0;
+  transform: translate3d(0, -30px, 0);
+}
+
+.open {
+  visibility: visible;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.closeButton {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background-color: transparent;
+  color: #777;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+    color: $black;
+  }
+}
