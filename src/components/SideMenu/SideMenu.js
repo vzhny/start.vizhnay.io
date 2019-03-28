@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Backdrop from '@/components/Backdrop/Backdrop';
-import { sideMenuDrawer, open, closed, hamburgerMenu, line } from './SideMenu.module.scss';
+import Card, { CardHeader, CardBody } from '@/components/Card/Card';
+import Modal from '@/components/Modal/Modal';
+import { sideMenuDrawer, sideMenuButton, open, closed, hamburgerMenu, line } from './SideMenu.module.scss';
 
 const SideMenu = () => {
   const [sideMenuVisible, toggleSideMenu] = useState(false);
+  const [modalVisible, toggleModal] = useState(false);
 
   const handleEscKey = e => {
     const { keyCode } = e;
@@ -17,6 +20,11 @@ const SideMenu = () => {
     }
   };
 
+  const closeAfterClick = () => {
+    toggleModal(true);
+    toggleSideMenu(false);
+  };
+
   useEffect(() => {
     window.addEventListener('keyup', handleEscKey);
 
@@ -27,15 +35,27 @@ const SideMenu = () => {
 
   return (
     <>
-      <button className={hamburgerMenu} onClick={() => toggleSideMenu(!sideMenuVisible)} type="button">
+      <button className={hamburgerMenu} onClick={() => toggleSideMenu(true)} type="button">
         <div className={line} />
         <div className={line} />
         <div className={line} />
       </button>
       <Backdrop isVisible={sideMenuVisible} toggleVisibility={toggleSideMenu} />
       <div className={clsx(sideMenuDrawer, sideMenuVisible ? open : closed)}>
-        <p>This is the side menu drawer.</p>
+        <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
+          Open Modal
+        </button>
       </div>
+      <Modal isVisible={modalVisible} toggleVisibility={toggleModal}>
+        <Card>
+          <CardHeader>
+            <h1>Hello!</h1>
+          </CardHeader>
+          <CardBody>
+            <p>Modal Body!</p>
+          </CardBody>
+        </Card>
+      </Modal>
     </>
   );
 };
