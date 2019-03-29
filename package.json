@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A streamlined start page, built with React, for saving users' most frequently visited websites.",
   "engines": {
-    "yarn": "1.15.0"
+    "yarn": "1.15.2"
   },
   "keywords": [
     "react",
@@ -34,6 +34,7 @@
     "await-to-js": "^2.1.1",
     "axios": "^0.18.0",
     "clsx": "^1.0.3",
+    "formik": "^1.5.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
