@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Backdrop from '@/components/Backdrop/Backdrop';
-import Card, { CardHeader, CardBody } from '@/components/Card/Card';
 import Modal from '@/components/Modal/Modal';
+import UserForm from '@/containers/UserForm/UserForm';
 import { sideMenuDrawer, sideMenuButton, open, closed, hamburgerMenu, line } from './SideMenu.module.scss';
 
 const SideMenu = () => {
@@ -43,18 +43,11 @@ const SideMenu = () => {
       <Backdrop isVisible={sideMenuVisible} toggleVisibility={toggleSideMenu} />
       <div className={clsx(sideMenuDrawer, sideMenuVisible ? open : closed)}>
         <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
-          Open Modal
+          Login/Register
         </button>
       </div>
       <Modal isVisible={modalVisible} toggleVisibility={toggleModal}>
-        <Card>
-          <CardHeader>
-            <h1>Hello!</h1>
-          </CardHeader>
-          <CardBody>
-            <p>Modal Body!</p>
-          </CardBody>
-        </Card>
+        <UserForm toggleVisibility={toggleModal} />
       </Modal>
     </>
   );
