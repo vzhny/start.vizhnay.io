@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -6,6 +6,7 @@ import axios from 'axios';
 import to from 'await-to-js';
 import store from 'store';
 import clsx from 'clsx';
+import { AuthContext } from '@/context/AuthContext';
 import Card, { CardHeader, CardBody, CardFooter } from '@/components/Card/Card';
 import {
   form,
@@ -30,6 +31,7 @@ const UserFormSchema = Yup.object().shape({
 const UserForm = ({ toggleVisibility }) => {
   const [formType, setFormType] = useState('login');
   const [serverError, setServerError] = useState('');
+  const [, setAuth] = useContext(AuthContext);
 
   const toggleBetweenForms = () => {
     if (formType === 'login') {
@@ -59,9 +61,9 @@ const UserForm = ({ toggleVisibility }) => {
             } else {
               const { jwt } = response.data;
               store.set('token', jwt);
+              setAuth(true);
               setSubmitting(false);
               toggleVisibility(false);
-              resetForm({ email: '', password: '' });
             }
           }}
           render={({ values, errors, touched, handleSubmit, handleChange, handleBlur, isSubmitting }) => (
@@ -107,11 +109,7 @@ const UserForm = ({ toggleVisibility }) => {
                 <button className={cancelButton} onClick={() => toggleVisibility(false)} type="button">
                   Cancel
                 </button>
-                <button
-                  className={submitButton}
-                  disabled={!touched.email || !touched.password || errors.email || errors.password}
-                  type="submit"
-                >
+                <button className={submitButton} type="submit">
                   {formType === 'login' ? 'Login' : 'Register'}
                 </button>
               </div>
