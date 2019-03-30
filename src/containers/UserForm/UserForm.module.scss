@@ -73,17 +73,6 @@
     color: $dark;
     transition: all 200ms ease-in;
   }
-
-  &:disabled {
-    cursor: not-allowed;
-    background-color: $secondary;
-    border: 1px solid $secondary;
-
-    &:hover {
-      background-color: $secondary;
-      border: 1px solid $secondary;
-    }
-  }
 }
 
 .toggleFormButton {
