@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
+import { AuthContext } from '@/context/AuthContext';
 import Backdrop from '@/components/Backdrop/Backdrop';
 import Modal from '@/components/Modal/Modal';
 import UserForm from '@/containers/UserForm/UserForm';
@@ -16,6 +17,7 @@ import {
 const SideMenu = () => {
   const [sideMenuVisible, toggleSideMenu] = useState(false);
   const [modalVisible, toggleModal] = useState(false);
+  const [auth] = useContext(AuthContext);
 
   const handleEscKey = e => {
     const { keyCode } = e;
@@ -55,13 +57,19 @@ const SideMenu = () => {
       <Backdrop isVisible={sideMenuVisible} toggleVisibility={toggleSideMenu} />
       <div className={clsx(sideMenu, sideMenuVisible && open)}>
         <div className={sideMenuList}>
-          <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
-            Login/Register
-          </button>
+          {auth ? (
+            <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
+              Logged in!
+            </button>
+          ) : (
+            <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
+              Login/Register
+            </button>
+          )}
         </div>
       </div>
       <Modal isVisible={modalVisible} toggleVisibility={toggleModal}>
-        <UserForm toggleVisibility={toggleModal} />
+        {auth ? <p>Logged in!</p> : <UserForm toggleVisibility={toggleModal} />}
       </Modal>
     </>
   );
