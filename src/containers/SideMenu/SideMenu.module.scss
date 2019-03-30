@@ -3,7 +3,7 @@
 
 $drawer-bg: #33384d;
 
-.sideMenuDrawer {
+.sideMenu {
   visibility: hidden;
   position: absolute;
   top: 0;
@@ -16,7 +16,12 @@ $drawer-bg: #33384d;
   background-color: $drawer-bg;
   color: $white;
   z-index: 999;
+  transform: translate3d(100%, 0, 0);
   transition: all 500ms;
+}
+
+.sideMenuList {
+  margin-top: 2.5rem;
 }
 
 .sideMenuButton {
@@ -39,10 +44,6 @@ $drawer-bg: #33384d;
   }
 }
 
-.closed {
-  transform: translate3d(100%, 0, 0);
-}
-
 .open {
   visibility: visible;
   transform: translate3d(0, 0, 0);
@@ -53,9 +54,11 @@ $drawer-bg: #33384d;
   top: 16px;
   right: 16px;
   height: 32px;
-  width: 36px;
+  width: 32px;
   background-color: transparent;
   border: none;
+  outline: none;
+  z-index: 1000;
 
   &:hover {
     cursor: pointer;
@@ -69,8 +72,28 @@ $drawer-bg: #33384d;
   }
 }
 
+.closeHamburgerMenu {
+  .line {
+    background-color: #848794;
+    opacity: 0.75;
+    transition: all 200ms ease-in;
+
+    &:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 6px);
+    }
+
+    &:nth-child(2) {
+      opacity: 0;
+    }
+
+    &:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+  }
+}
+
 .line {
-  height: 6px;
+  height: 3px;
   width: 100%;
   margin-bottom: 6px;
   background-color: #474b5e;
