@@ -41,7 +41,7 @@ const UserForm = ({ toggleVisibility }) => {
 
   return (
     <Card>
-      <CardHeader style={{ paddingTop: '1.5rem' }}>
+      <CardHeader style={{ paddingTop: '1.3rem' }}>
         <h3>{formType === 'login' ? 'Log into an existing account!' : 'Register a new account!'}</h3>
       </CardHeader>
       <CardBody>
