@@ -4,6 +4,6 @@ import axios from 'axios';
 import App from '@/containers/App/App';
 import '@/styles/scss/base.scss';
 
-axios.defaults.baseURL = 'https://api-start-vizhnay-io.herokuapp.com/api';
+axios.defaults.baseURL = 'http://localhost:3000/api';
 
 ReactDOM.render(<App />, document.getElementById('app'));
