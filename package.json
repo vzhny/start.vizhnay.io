@@ -30,7 +30,6 @@
     }
   },
   "dependencies": {
-    "@reach/router": "^1.2.1",
     "await-to-js": "^2.1.1",
     "axios": "^0.18.0",
     "clsx": "^1.0.3",
