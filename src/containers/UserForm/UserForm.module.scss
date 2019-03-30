@@ -16,6 +16,22 @@
   padding: 8px;
   margin-top: 8px;
   margin-bottom: 1rem;
+  border: 1px solid $black;
+  outline: none;
+}
+
+.validInput {
+  border: 1px solid $success;
+}
+
+.inputError {
+  border: 1px solid $danger;
+}
+
+.errorMessage {
+  color: $danger;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .buttonGroup {
@@ -27,7 +43,7 @@
   flex-basis: 50%;
   margin-top: 1rem;
   padding: 1rem;
-  border: 2px solid $dark;
+  border: 1px solid $dark;
   background-color: $white;
   color: $dark;
   transition: all 200ms ease-out;
@@ -43,12 +59,41 @@
   }
 }
 
-.registerButton {
+.cancelButton {
   @extend .button;
   margin-right: 4px;
 }
 
-.loginButton {
+.submitButton {
   @extend .button;
   margin-left: 4px;
+
+  &:hover {
+    background-color: $success;
+    color: $dark;
+    transition: all 200ms ease-in;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $secondary;
+    border: 1px solid $secondary;
+
+    &:hover {
+      background-color: $secondary;
+      border: 1px solid $secondary;
+    }
+  }
+}
+
+.toggleFormButton {
+  background-color: transparent;
+  color: $link;
+  border: none;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+    color: lighten($link, 20%);
+  }
 }
