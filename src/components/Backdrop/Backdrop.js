@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { backdrop, visible, hidden } from './Backdrop.module.scss';
+import { backdrop, visible } from './Backdrop.module.scss';
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/aria-role */
@@ -9,7 +9,7 @@ import { backdrop, visible, hidden } from './Backdrop.module.scss';
 const Backdrop = ({ isVisible, toggleVisibility }) => {
   return (
     <div
-      className={clsx(backdrop, isVisible ? visible : hidden)}
+      className={clsx(backdrop, isVisible && visible)}
       onClick={() => toggleVisibility(false)}
       onKeyPress={() => toggleVisibility(false)}
       role="backdrop"

@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import { getGreeting } from '@/utils/utils';
+import SideMenu from '@/containers/SideMenu/SideMenu';
 import Container from '@/components/Container/Container';
-import SideMenu from '@/components/SideMenu/SideMenu';
 import Card, { CardBody } from '@/components/Card/Card';
 import { app } from './App.module.scss';
 

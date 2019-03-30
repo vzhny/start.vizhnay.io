@@ -1,0 +1,99 @@
+@import '~@/styles/scss/partials/variables';
+@import '~@/styles/scss/partials/abstracts';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.label {
+  text-align: left;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid $black;
+  outline: none;
+}
+
+.validInput {
+  border: 1px solid $success;
+}
+
+.inputError {
+  border: 1px solid $danger;
+}
+
+.errorMessage {
+  color: $danger;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.buttonGroup {
+  width: 100%;
+  display: flex;
+}
+
+.button {
+  flex-basis: 50%;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid $dark;
+  background-color: $white;
+  color: $dark;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+    transition: all 200ms ease-in;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.cancelButton {
+  @extend .button;
+  margin-right: 4px;
+}
+
+.submitButton {
+  @extend .button;
+  margin-left: 4px;
+
+  &:hover {
+    background-color: $success;
+    color: $dark;
+    transition: all 200ms ease-in;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $secondary;
+    border: 1px solid $secondary;
+
+    &:hover {
+      background-color: $secondary;
+      border: 1px solid $secondary;
+    }
+  }
+}
+
+.toggleFormButton {
+  background-color: transparent;
+  color: $link;
+  border: none;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+    color: lighten($link, 20%);
+  }
+}

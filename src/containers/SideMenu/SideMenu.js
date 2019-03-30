@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Backdrop from '@/components/Backdrop/Backdrop';
-import Card, { CardHeader, CardBody } from '@/components/Card/Card';
 import Modal from '@/components/Modal/Modal';
-import { sideMenuDrawer, sideMenuButton, open, closed, hamburgerMenu, line } from './SideMenu.module.scss';
+import UserForm from '@/containers/UserForm/UserForm';
+import {
+  sideMenu,
+  sideMenuList,
+  sideMenuButton,
+  open,
+  hamburgerMenu,
+  closeHamburgerMenu,
+  line,
+} from './SideMenu.module.scss';
 
 const SideMenu = () => {
   const [sideMenuVisible, toggleSideMenu] = useState(false);
@@ -35,26 +43,25 @@ const SideMenu = () => {
 
   return (
     <>
-      <button className={hamburgerMenu} onClick={() => toggleSideMenu(true)} type="button">
+      <button
+        className={clsx(hamburgerMenu, sideMenuVisible && closeHamburgerMenu)}
+        onClick={() => toggleSideMenu(!sideMenuVisible)}
+        type="button"
+      >
         <div className={line} />
         <div className={line} />
         <div className={line} />
       </button>
       <Backdrop isVisible={sideMenuVisible} toggleVisibility={toggleSideMenu} />
-      <div className={clsx(sideMenuDrawer, sideMenuVisible ? open : closed)}>
-        <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
-          Open Modal
-        </button>
+      <div className={clsx(sideMenu, sideMenuVisible && open)}>
+        <div className={sideMenuList}>
+          <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
+            Login/Register
+          </button>
+        </div>
       </div>
       <Modal isVisible={modalVisible} toggleVisibility={toggleModal}>
-        <Card>
-          <CardHeader>
-            <h1>Hello!</h1>
-          </CardHeader>
-          <CardBody>
-            <p>Modal Body!</p>
-          </CardBody>
-        </Card>
+        <UserForm toggleVisibility={toggleModal} />
       </Modal>
     </>
   );

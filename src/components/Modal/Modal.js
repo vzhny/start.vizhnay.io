@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Backdrop from '@/components/Backdrop/Backdrop';
-import PropTypes from 'prop-types';
-import { modal, open, closed, closeButton } from './Modal.module.scss';
+import cross from '@/images/cross.svg';
+import { modal, open, closeButton, closeButtonIcon } from './Modal.module.scss';
 
 const Modal = ({ children, isVisible, toggleVisibility }) => {
   const handleEscKey = e => {
@@ -27,9 +28,9 @@ const Modal = ({ children, isVisible, toggleVisibility }) => {
   return (
     <>
       <Backdrop isVisible={isVisible} toggleVisibility={toggleVisibility} />
-      <div className={clsx(modal, isVisible ? open : closed)}>
+      <div className={clsx(modal, isVisible && open)}>
         <button className={closeButton} onClick={() => toggleVisibility(false)} type="button">
-          &times;
+          <img alt="Close Button" className={closeButtonIcon} src={cross} />
         </button>
         {children}
       </div>
