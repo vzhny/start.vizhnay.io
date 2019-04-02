@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { getGreeting } from '@/utils/utils';
-import { AuthProvider } from '@/context/AuthContext';
+import { AuthProvider } from '@/state/context/AuthContext';
 import SideMenu from '@/containers/SideMenu/SideMenu';
 import LinksContainer from '@/containers/LinksContainer/LinksContainer';
 import { app } from './App.module.scss';

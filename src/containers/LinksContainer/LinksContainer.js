@@ -2,7 +2,7 @@ import React, { useState, useLayoutEffect, useContext } from 'react';
 import to from 'await-to-js';
 import axios from 'axios';
 import store from 'store';
-import { AuthContext } from '@/context/AuthContext';
+import { AuthContext } from '@/state/context/AuthContext';
 import Card, { CardBody } from '@/components/Card/Card';
 import Collection from '@/components/Collection/Collection';
 import { linksContainer } from './LinksContainer.module.scss';

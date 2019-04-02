@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
-import { AuthContext } from '@/context/AuthContext';
+import { AuthContext } from '@/state/context/AuthContext';
 import Backdrop from '@/components/Backdrop/Backdrop';
 import Modal from '@/components/Modal/Modal';
 import UserForm from '@/containers/UserForm/UserForm';

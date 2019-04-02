@@ -6,7 +6,7 @@ import axios from 'axios';
 import to from 'await-to-js';
 import store from 'store';
 import clsx from 'clsx';
-import { AuthContext } from '@/context/AuthContext';
+import { AuthContext } from '@/state/context/AuthContext';
 import Card, { CardHeader, CardBody, CardFooter } from '@/components/Card/Card';
 import {
   form,
