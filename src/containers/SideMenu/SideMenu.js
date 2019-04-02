@@ -4,6 +4,7 @@ import { AuthContext } from '@/context/AuthContext';
 import Backdrop from '@/components/Backdrop/Backdrop';
 import Modal from '@/components/Modal/Modal';
 import UserForm from '@/containers/UserForm/UserForm';
+import AddLinkForm from '@/containers/AddLinkForm/AddLinkForm';
 import {
   sideMenu,
   sideMenuList,
@@ -59,7 +60,7 @@ const SideMenu = () => {
         <div className={sideMenuList}>
           {auth ? (
             <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
-              Logged in!
+              Add a New Link
             </button>
           ) : (
             <button className={sideMenuButton} onClick={() => closeAfterClick()} type="button">
@@ -69,7 +70,7 @@ const SideMenu = () => {
         </div>
       </div>
       <Modal isVisible={modalVisible} toggleVisibility={toggleModal}>
-        {auth ? <p>Logged in!</p> : <UserForm toggleVisibility={toggleModal} />}
+        {auth ? <AddLinkForm toggleVisibility={toggleModal} /> : <UserForm toggleVisibility={toggleModal} />}
       </Modal>
     </>
   );
