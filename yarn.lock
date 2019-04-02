@@ -7458,6 +7458,11 @@ react-fast-compare@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
+react-hanger@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/react-hanger/-/react-hanger-1.1.4.tgz#4017e692d011a518299dc156d9ed9644f85ff5cb"
+  integrity sha512-qn3WhFT6b1SeK0FIEaDtVs0TTT/xyyIOXMIaqqwzxWRnrQERU3aDx9EETaOTm4MIp4zSZH6v/UKKBG1Wh3gBJg==
+
 react-is@^16.8.1, react-is@^16.8.4:
   version "16.8.5"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.5.tgz#c54ac229dd66b5afe0de5acbe47647c3da692ff8"
