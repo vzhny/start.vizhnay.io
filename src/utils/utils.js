@@ -1,10 +1,4 @@
 import store from 'store';
-import get from 'lodash/get';
-import pick from 'lodash/pick';
-import find from 'lodash/find';
-import findIndex from 'lodash/findIndex';
-
-/* eslint-disable array-callback-return */
 
 const getGreeting = currentHour => {
   let greeting = 'Good Evening!';
@@ -18,45 +12,17 @@ const getGreeting = currentHour => {
   return greeting;
 };
 
-const retrieveCategories = links => {
-  const categories = [];
+const setInitialLocalStorage = () => {
+  const links = store.get('links');
+  const categories = store.get('categories');
 
-  links.map(link => {
-    const category = get(link, 'category');
+  if (links === undefined) {
+    store.set('links', []);
+  }
 
-    if (findIndex(categories, category) === -1) {
-      categories.push(category);
-    }
-  });
-
-  return categories;
-};
-
-const addCategory = category => {
-  const storedCategories = store.get('categories');
-
-  if (find(storedCategories, category)) {
-    storedCategories.push(category);
+  if (categories === undefined) {
+    store.set('categories', []);
   }
 };
 
-const saveLinkToLocalStorage = link => {
-  const { category: linkCategory } = link;
-  const linkWithoutCategory = pick(link, ['title', 'url', 'linkId']);
-  const storedLinks = store.get('links');
-
-  const categoryIndex = findIndex(storedLinks, { category: linkCategory });
-
-  if (categoryIndex >= 0) {
-    storedLinks[categoryIndex].links.push(linkWithoutCategory);
-  } else {
-    storedLinks.push({
-      category: linkCategory,
-      links: [linkWithoutCategory],
-    });
-  }
-
-  store.set('links', storedLinks);
-};
-
-export { getGreeting, retrieveCategories, addCategory, saveLinkToLocalStorage };
+export { getGreeting, setInitialLocalStorage };

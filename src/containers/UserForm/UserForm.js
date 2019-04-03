@@ -6,7 +6,8 @@ import axios from 'axios';
 import to from 'await-to-js';
 import store from 'store';
 import clsx from 'clsx';
-import { AuthContext } from '@/context/AuthContext';
+import { RefreshContext } from '@/state/context/RefreshContext';
+import { AuthContext } from '@/state/context/AuthContext';
 import Card, { CardHeader, CardBody, CardFooter } from '@/components/Card/Card';
 import {
   form,
@@ -31,6 +32,7 @@ const UserFormSchema = Yup.object().shape({
 const UserForm = ({ toggleVisibility }) => {
   const [formType, setFormType] = useState('login');
   const [serverError, setServerError] = useState('');
+  const [refresh, toggleRefresh] = useContext(RefreshContext);
   const [, setAuth] = useContext(AuthContext);
 
   const toggleBetweenForms = () => {
@@ -62,6 +64,7 @@ const UserForm = ({ toggleVisibility }) => {
               const { jwt } = response.data;
               store.set('token', jwt);
               setAuth(true);
+              toggleRefresh(!refresh);
               setSubmitting(false);
               toggleVisibility(false);
             }
