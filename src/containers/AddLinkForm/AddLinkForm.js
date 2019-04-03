@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -6,8 +6,9 @@ import axios from 'axios';
 import to from 'await-to-js';
 import store from 'store';
 import clsx from 'clsx';
+import { RefreshContext } from '@/state/context/RefreshContext';
+import { LinksContext } from '@/state/context/LinksContext';
 import Card, { CardHeader, CardBody } from '@/components/Card/Card';
-import { saveLinkToLocalStorage } from '@/utils/utils';
 import {
   form,
   label,
@@ -32,6 +33,8 @@ const AddLinkFormSchema = Yup.object().shape({
 
 const AddLinkForm = ({ toggleVisibility }) => {
   const [serverError, setServerError] = useState('');
+  const [refresh, toggleRefresh] = useContext(RefreshContext);
+  const [, dispatch] = useContext(LinksContext);
 
   return (
     <Card>
@@ -57,7 +60,8 @@ const AddLinkForm = ({ toggleVisibility }) => {
               setServerError('There was an error adding the link, please try again later.');
               setSubmitting(false);
             } else {
-              saveLinkToLocalStorage(response.data);
+              dispatch({ type: 'ADD_LINK', payload: response.data });
+              toggleRefresh(!refresh);
               setSubmitting(false);
               resetForm();
               toggleVisibility(false);
