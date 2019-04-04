@@ -2,36 +2,68 @@
 @import '~@/styles/scss/partials/abstracts';
 
 .form {
+  width: 350px;
   display: flex;
   flex-direction: column;
   padding: 1rem;
 }
 
-.label {
+.formGroup {
+  position: relative;
   text-align: left;
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
 }
 
 .input {
   width: 100%;
   padding: 8px;
   margin-top: 8px;
-  margin-bottom: 1rem;
   border: 1px solid $black;
   outline: none;
-}
-
-.validInput {
-  border: 1px solid $success;
 }
 
 .inputError {
   border: 1px solid $danger;
 }
 
+.dropdownContainer {
+  visibility: hidden;
+  opacity: 0;
+  width: 100%;
+  position: absolute;
+  transition: all 300ms;
+}
+
+.dropdownOption {
+  padding: 8px 4px;
+  border-left: 1px solid $black;
+  border-right: 1px solid $black;
+  background-color: $white;
+
+  &:last-child {
+    border-bottom: 1px solid $black;
+    box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $primary;
+    color: $white;
+  }
+}
+
+.show {
+  visibility: visible;
+  opacity: 1;
+}
+
 .errorMessage {
   color: $danger;
-  text-align: center;
-  margin-bottom: 1rem;
 }
 
 .buttonGroup {

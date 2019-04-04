@@ -11,6 +11,7 @@ import { AuthContext } from '@/state/context/AuthContext';
 import Card, { CardHeader, CardBody, CardFooter } from '@/components/Card/Card';
 import {
   form,
+  formGroup,
   label,
   input,
   validInput,
@@ -69,47 +70,52 @@ const UserForm = ({ toggleVisibility }) => {
               toggleVisibility(false);
             }
           }}
-          render={({ values, errors, touched, handleSubmit, handleChange, handleBlur, isSubmitting }) => (
+          render={({ values, errors, handleSubmit, handleChange, resetForm, isSubmitting }) => (
             <form className={form} onSubmit={e => handleSubmit(e)}>
-              <label className={label} htmlFor="email">
-                Email:
+              <div className={formGroup}>
+                <label className={label} htmlFor="email">
+                  <span>Email:</span>
+                  <span>{errors.email && <span className={errorMessage}>{errors.email}</span>}</span>
+                </label>
                 <input
-                  className={clsx(input, errors.email && inputError, !errors.email && touched.email && validInput)}
+                  className={clsx(input, errors.email && inputError, !errors.email && validInput)}
                   disabled={isSubmitting}
                   name="email"
-                  onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="hello@gmail.com"
                   type="text"
                   value={values.email}
                 />
-                {errors.email && touched.email ? <p className={errorMessage}>{errors.email}</p> : null}
-              </label>
-              <label className={label} htmlFor="password">
-                Password:
+              </div>
+              <div className={formGroup}>
+                <label className={label} htmlFor="password">
+                  <span>Password:</span>
+                  {errors.password && <span className={errorMessage}>{errors.password}</span>}
+                </label>
                 <input
-                  className={clsx(
-                    input,
-                    errors.password && inputError,
-                    !errors.password && touched.password && validInput
-                  )}
+                  className={clsx(input, errors.password && inputError, !errors.password && validInput)}
                   disabled={isSubmitting}
                   name="password"
-                  onBlur={handleBlur}
                   onChange={handleChange}
                   placeholder="••••••"
                   type="password"
                   value={values.password}
                 />
-                {errors.password && touched.password ? (
-                  <p className={errorMessage} style={{ marginBottom: '0' }}>
-                    {errors.password}
-                  </p>
-                ) : null}
-              </label>
-              {serverError.length > 0 ? <p className={errorMessage}>{serverError}</p> : null}
+              </div>
+              {serverError.length > 0 && (
+                <div className={formGroup}>
+                  <p className={errorMessage}>{serverError}</p>
+                </div>
+              )}
               <div className={buttonGroup}>
-                <button className={cancelButton} onClick={() => toggleVisibility(false)} type="button">
+                <button
+                  className={cancelButton}
+                  onClick={() => {
+                    resetForm();
+                    toggleVisibility(false);
+                  }}
+                  type="button"
+                >
                   Cancel
                 </button>
                 <button className={submitButton} type="submit">
@@ -122,7 +128,13 @@ const UserForm = ({ toggleVisibility }) => {
         />
       </CardBody>
       <CardFooter>
-        <button className={toggleFormButton} onClick={() => toggleBetweenForms()} type="button">
+        <button
+          className={toggleFormButton}
+          onClick={() => {
+            toggleBetweenForms();
+          }}
+          type="button"
+        >
           {formType === 'login' ? 'Register a new account!' : 'Log into an existing account!'}
         </button>
       </CardFooter>
