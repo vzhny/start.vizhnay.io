@@ -1,10 +1,8 @@
 import React, { useLayoutEffect } from 'react';
 import { getGreeting } from '@/utils/utils';
-import { RefreshProvider } from '@/state/context/RefreshContext';
-import { LinksProvider } from '@/state/context/LinksContext';
-import { AuthProvider } from '@/state/context/AuthContext';
-import SideMenu from '@/containers/SideMenu/SideMenu';
+import GlobalContext from '@/containers/GlobalContext/GlobalContext';
 import LinksContainer from '@/containers/LinksContainer/LinksContainer';
+import SideMenu from '@/containers/SideMenu/SideMenu';
 import { app } from './App.module.scss';
 
 const App = () => {
@@ -15,14 +13,10 @@ const App = () => {
 
   return (
     <div className={app}>
-      <RefreshProvider>
-        <LinksProvider>
-          <AuthProvider>
-            <LinksContainer />
-            <SideMenu />
-          </AuthProvider>
-        </LinksProvider>
-      </RefreshProvider>
+      <GlobalContext>
+        <LinksContainer />
+        <SideMenu />
+      </GlobalContext>
     </div>
   );
 };
