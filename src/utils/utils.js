@@ -14,14 +14,9 @@ const getGreeting = currentHour => {
 
 const setInitialLocalStorage = () => {
   const links = store.get('links');
-  const categories = store.get('categories');
 
   if (links === undefined) {
     store.set('links', []);
-  }
-
-  if (categories === undefined) {
-    store.set('categories', []);
   }
 };
 
