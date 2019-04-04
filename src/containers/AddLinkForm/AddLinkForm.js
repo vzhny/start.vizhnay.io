@@ -11,10 +11,13 @@ import { LinksContext } from '@/state/context/LinksContext';
 import Card, { CardHeader, CardBody } from '@/components/Card/Card';
 import {
   form,
+  formGroup,
   label,
   input,
-  validInput,
   inputError,
+  dropdownContainer,
+  dropdownOption,
+  show,
   errorMessage,
   buttonGroup,
   cancelButton,
@@ -22,6 +25,8 @@ import {
 } from './AddLinkForm.module.scss';
 
 /* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 const AddLinkFormSchema = Yup.object().shape({
   title: Yup.string().required('A title is required.'),
@@ -34,7 +39,8 @@ const AddLinkFormSchema = Yup.object().shape({
 const AddLinkForm = ({ toggleVisibility }) => {
   const [serverError, setServerError] = useState('');
   const [refresh, toggleRefresh] = useContext(RefreshContext);
-  const [, dispatch] = useContext(LinksContext);
+  const [{ links }, dispatch] = useContext(LinksContext);
+  const [showDropdown, toggleDropdown] = useState(false);
 
   return (
     <Card>
@@ -46,7 +52,7 @@ const AddLinkForm = ({ toggleVisibility }) => {
           initialValues={{
             title: '',
             url: '',
-            category: 'Test',
+            category: '',
           }}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             const token = store.get('token');
@@ -67,43 +73,83 @@ const AddLinkForm = ({ toggleVisibility }) => {
               toggleVisibility(false);
             }
           }}
-          render={({ values, errors, touched, handleSubmit, handleChange, handleBlur, isSubmitting }) => (
+          render={({ values, errors, handleSubmit, handleChange, setFieldValue, resetForm, isSubmitting }) => (
             <form className={form} onSubmit={e => handleSubmit(e)}>
-              <label className={label} htmlFor="title">
-                Title:
+              <div className={formGroup}>
+                <label className={label} htmlFor="title">
+                  <span>Title:</span>
+                  {errors.title && <span className={errorMessage}>{errors.title}</span>}
+                </label>
                 <input
-                  className={clsx(input, errors.title && inputError, !errors.title && touched.title && validInput)}
+                  className={clsx(input, errors.title && inputError)}
                   disabled={isSubmitting}
                   name="title"
-                  onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder="Netflix"
+                  placeholder="Add a Title"
                   type="text"
                   value={values.title}
                 />
-                {errors.title && touched.title ? <p className={errorMessage}>{errors.title}</p> : null}
-              </label>
-              <label className={label} htmlFor="url">
-                URL:
+              </div>
+              <div className={formGroup}>
+                <label className={label} htmlFor="url">
+                  <span>URL:</span>
+                  {errors.url && <span className={errorMessage}>{errors.url}</span>}
+                </label>
                 <input
-                  className={clsx(input, errors.url && inputError, !errors.url && touched.url && validInput)}
+                  className={clsx(input, errors.url && inputError)}
                   disabled={isSubmitting}
                   name="url"
-                  onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder="https://netflix.com"
+                  placeholder="Add a URL"
                   type="url"
                   value={values.url}
                 />
-                {errors.url && touched.url ? (
-                  <p className={errorMessage} style={{ marginBottom: '0' }}>
-                    {errors.url}
-                  </p>
-                ) : null}
-              </label>
-              {serverError.length > 0 ? <p className={errorMessage}>{serverError}</p> : null}
+              </div>
+              <div className={formGroup}>
+                <label className={label} htmlFor="category">
+                  <span>Category:</span>
+                  {errors.category && <span className={errorMessage}>{errors.category}</span>}
+                </label>
+                <input
+                  className={clsx(input, errors.category && inputError)}
+                  disabled={isSubmitting}
+                  name="category"
+                  onBlur={() => toggleDropdown(false)}
+                  onChange={handleChange}
+                  onFocus={() => toggleDropdown(true)}
+                  placeholder="Add a New/Existing Category"
+                  type="category"
+                  value={values.category}
+                />
+                <div className={clsx(dropdownContainer, showDropdown && show)}>
+                  {links.map(({ category }) => {
+                    return (
+                      <p
+                        key={category}
+                        className={clsx(dropdownOption)}
+                        data-id={category}
+                        onClick={e => setFieldValue('category', e.currentTarget.dataset.id)}
+                      >
+                        {category}
+                      </p>
+                    );
+                  })}
+                </div>
+              </div>
+              {serverError.length > 0 && (
+                <div className={formGroup}>
+                  <p className={errorMessage}>{serverError}</p>
+                </div>
+              )}
               <div className={buttonGroup}>
-                <button className={cancelButton} onClick={() => toggleVisibility(false)} type="button">
+                <button
+                  className={cancelButton}
+                  onClick={() => {
+                    toggleVisibility(false);
+                    resetForm();
+                  }}
+                  type="button"
+                >
                   Cancel
                 </button>
                 <button className={submitButton} type="submit">
