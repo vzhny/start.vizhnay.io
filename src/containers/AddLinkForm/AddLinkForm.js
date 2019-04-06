@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { RefreshContext } from '@/state/context/RefreshContext';
 import { LinksContext } from '@/state/context/LinksContext';
 import Card, { CardHeader, CardBody } from '@/components/Card/Card';
+import Loader from '@/components/Loader/Loader';
 import {
   form,
   formGroup,
@@ -36,7 +37,7 @@ const AddLinkFormSchema = Yup.object().shape({
   category: Yup.string().required('A category is required.'),
 });
 
-const AddLinkForm = ({ toggleVisibility }) => {
+const AddLinkForm = ({ toggleClose }) => {
   const [serverError, setServerError] = useState('');
   const [refresh, toggleRefresh] = useContext(RefreshContext);
   const [{ links }, dispatch] = useContext(LinksContext);
@@ -68,9 +69,8 @@ const AddLinkForm = ({ toggleVisibility }) => {
             } else {
               dispatch({ type: 'ADD_LINK', payload: response.data });
               toggleRefresh(!refresh);
-              setSubmitting(false);
               resetForm();
-              toggleVisibility(false);
+              toggleClose();
             }
           }}
           render={({ values, errors, handleSubmit, handleChange, setFieldValue, resetForm, isSubmitting }) => (
@@ -141,21 +141,25 @@ const AddLinkForm = ({ toggleVisibility }) => {
                   <p className={errorMessage}>{serverError}</p>
                 </div>
               )}
-              <div className={buttonGroup}>
-                <button
-                  className={cancelButton}
-                  onClick={() => {
-                    toggleVisibility(false);
-                    resetForm();
-                  }}
-                  type="button"
-                >
-                  Cancel
-                </button>
-                <button className={submitButton} type="submit">
-                  Add Link
-                </button>
-              </div>
+              {isSubmitting ? (
+                <Loader />
+              ) : (
+                <div className={buttonGroup}>
+                  <button
+                    className={cancelButton}
+                    onClick={() => {
+                      toggleClose();
+                      resetForm();
+                    }}
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                  <button className={submitButton} type="submit">
+                    Add Link
+                  </button>
+                </div>
+              )}
             </form>
           )}
           validationSchema={AddLinkFormSchema}
@@ -166,7 +170,7 @@ const AddLinkForm = ({ toggleVisibility }) => {
 };
 
 AddLinkForm.propTypes = {
-  toggleVisibility: PropTypes.func.isRequired,
+  toggleClose: PropTypes.func.isRequired,
 };
 
 export default AddLinkForm;
