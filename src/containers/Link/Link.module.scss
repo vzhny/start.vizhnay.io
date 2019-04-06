@@ -1,0 +1,55 @@
+@import '~@/styles/scss/partials/variables';
+@import '~@/styles/scss/partials/abstracts';
+
+.linkContainer {
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.link {
+  justify-self: center;
+  text-decoration: none;
+  color: $black;
+
+  &:hover {
+    text-decoration: underline;
+    color: lighten($black, 20%);
+  }
+}
+
+.buttonGroup {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.button {
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  margin-right: 4px;
+}
+
+.buttonIcon {
+  opacity: 0.8;
+  transition: all 150ms ease-out;
+
+  &:hover {
+    opacity: 1;
+    transition: all 150ms ease-in;
+  }
+}
+
+.editButtonIcon {
+  @extend .buttonIcon;
+
+  height: 100%;
+}
+
+.deleteButtonIcon {
+  @extend .buttonIcon;
+
+  height: 100%;
+}
