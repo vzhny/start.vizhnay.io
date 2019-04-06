@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import clsx from 'clsx';
+import useAnimation from '@/state/hooks/useAnimation';
 import { AuthContext } from '@/state/context/AuthContext';
 import { EditLinksContext } from '@/state/context/EditLinksContext';
 import Backdrop from '@/components/Backdrop/Backdrop';
@@ -17,32 +18,10 @@ import {
 } from './SideMenu.module.scss';
 
 const SideMenu = () => {
-  const [sideMenuVisible, setSideMenu] = useState(false);
-  const [modalVisible, setModal] = useState(false);
-  const [animateSideMenu, toggleSideMenuAnimation] = useState(false);
-  const [animateModal, toggleModalAnimation] = useState(false);
+  const [[sideMenuVisible, animateSideMenu], toggleSideMenu] = useAnimation();
+  const [[modalVisible, animateModal], toggleModal] = useAnimation();
   const [auth] = useContext(AuthContext);
   const [, toggleEditLinks] = useContext(EditLinksContext);
-
-  const toggleSideMenu = () => {
-    if (sideMenuVisible === true) {
-      toggleSideMenuAnimation(false);
-      setTimeout(() => setSideMenu(false), 500);
-    } else {
-      setSideMenu(true);
-      setTimeout(() => toggleSideMenuAnimation(true), 0);
-    }
-  };
-
-  const toggleModal = () => {
-    if (modalVisible === true) {
-      toggleModalAnimation(false);
-      setTimeout(() => setModal(false), 500);
-    } else {
-      setModal(true);
-      setTimeout(() => toggleModalAnimation(true), 0);
-    }
-  };
 
   const handleEscKey = event => {
     const { keyCode } = event;
@@ -116,7 +95,7 @@ const SideMenu = () => {
       )}
       {modalVisible && (
         <Modal animate={animateModal} toggleClose={toggleModal}>
-          {auth ? <AddLinkForm toggleVisibility={setModal} /> : <UserForm toggleVisibility={setModal} />}
+          {auth ? <AddLinkForm toggleClose={toggleModal} /> : <UserForm toggleClose={toggleModal} />}
         </Modal>
       )}
     </>
