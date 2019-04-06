@@ -37,6 +37,7 @@
   transition: all 150ms ease-out;
 
   &:hover {
+    cursor: pointer;
     opacity: 1;
     transition: all 150ms ease-in;
   }
