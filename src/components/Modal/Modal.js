@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Backdrop from '@/components/Backdrop/Backdrop';
-import cross from '@/images/cross.svg';
+import closeIcon from '@/images/close.svg';
 import { modal, open, closeButton, closeButtonIcon } from './Modal.module.scss';
 
-const Modal = ({ children, isVisible, toggleVisibility }) => {
+const Modal = ({ children, animate, toggleClose }) => {
   const handleEscKey = e => {
     const { keyCode } = e;
     const escKey = 27;
 
     if (keyCode === escKey) {
       e.preventDefault();
-      toggleVisibility(false);
+      toggleClose();
       window.removeEventListener('keyup', handleEscKey);
     }
   };
@@ -27,10 +27,10 @@ const Modal = ({ children, isVisible, toggleVisibility }) => {
 
   return (
     <>
-      <Backdrop isVisible={isVisible} toggleVisibility={toggleVisibility} />
-      <div className={clsx(modal, isVisible && open)}>
-        <button className={closeButton} onClick={() => toggleVisibility(false)} type="button">
-          <img alt="Close Button" className={closeButtonIcon} src={cross} />
+      <Backdrop animate={animate} toggleClose={toggleClose} />
+      <div className={clsx(modal, animate && open)}>
+        <button className={closeButton} onClick={() => toggleClose()} type="button">
+          <img alt="Close Button" className={closeButtonIcon} src={closeIcon} />
         </button>
         {children}
       </div>
@@ -38,14 +38,10 @@ const Modal = ({ children, isVisible, toggleVisibility }) => {
   );
 };
 
-Modal.defaultProps = {
-  isVisible: false,
-};
-
 Modal.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-  isVisible: PropTypes.bool,
-  toggleVisibility: PropTypes.func.isRequired,
+  animate: PropTypes.bool.isRequired,
+  toggleClose: PropTypes.func.isRequired,
 };
 
 export default Modal;
