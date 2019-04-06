@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-export default (state, updater, delay = 500) => {
+export default (delay = 500) => {
+  const [state, updater] = useState(false);
   const [animate, setAnimation] = useState(false);
 
   const toggleAnimation = () => {
@@ -13,5 +14,5 @@ export default (state, updater, delay = 500) => {
     }
   };
 
-  return [animate, toggleAnimation];
+  return [[state, animate], toggleAnimation];
 };
