@@ -3,19 +3,22 @@ import PropTypes from 'prop-types';
 import { RefreshProvider } from '@/state/context/RefreshContext';
 import { LinksProvider } from '@/state/context/LinksContext';
 import { AuthProvider } from '@/state/context/AuthContext';
+import { EditLinksProvider } from '@/state/context/EditLinksContext';
 
-const GlobalContext = ({ children }) => {
+const GlobalProvider = ({ children }) => {
   return (
     <RefreshProvider>
       <LinksProvider>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <EditLinksProvider>{children}</EditLinksProvider>
+        </AuthProvider>
       </LinksProvider>
     </RefreshProvider>
   );
 };
 
-GlobalContext.propTypes = {
+GlobalProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
-export default GlobalContext;
+export default GlobalProvider;

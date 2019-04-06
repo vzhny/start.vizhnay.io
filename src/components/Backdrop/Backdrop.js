@@ -6,24 +6,20 @@ import { backdrop, visible } from './Backdrop.module.scss';
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/aria-role */
 
-const Backdrop = ({ isVisible, toggleVisibility }) => {
+const Backdrop = ({ animate, toggleClose }) => {
   return (
     <div
-      className={clsx(backdrop, isVisible && visible)}
-      onClick={() => toggleVisibility(false)}
-      onKeyPress={() => toggleVisibility(false)}
+      className={clsx(backdrop, animate && visible)}
+      onClick={() => toggleClose()}
+      onKeyPress={() => toggleClose()}
       role="backdrop"
     />
   );
 };
 
-Backdrop.defaultProps = {
-  isVisible: false,
-};
-
 Backdrop.propTypes = {
-  isVisible: PropTypes.bool,
-  toggleVisibility: PropTypes.func.isRequired,
+  animate: PropTypes.bool.isRequired,
+  toggleClose: PropTypes.func.isRequired,
 };
 
 export default Backdrop;

@@ -1,22 +1,21 @@
-import React, { useLayoutEffect } from 'react';
-import { getGreeting } from '@/utils/utils';
-import GlobalContext from '@/containers/GlobalContext/GlobalContext';
+import React from 'react';
+import useDocumentTitle from '@/state/hooks/useDocumentTitle';
+import GlobalProvider from '@/containers/GlobalProvider/GlobalProvider';
 import LinksContainer from '@/containers/LinksContainer/LinksContainer';
 import SideMenu from '@/containers/SideMenu/SideMenu';
+import FloatingButton from '@/components/FloatingButton/FloatingButton';
 import { app } from './App.module.scss';
 
 const App = () => {
-  useLayoutEffect(() => {
-    const currentHour = new Date().getHours();
-    document.title = getGreeting(currentHour);
-  }, []);
+  useDocumentTitle();
 
   return (
     <div className={app}>
-      <GlobalContext>
+      <GlobalProvider>
         <LinksContainer />
         <SideMenu />
-      </GlobalContext>
+        <FloatingButton />
+      </GlobalProvider>
     </div>
   );
 };

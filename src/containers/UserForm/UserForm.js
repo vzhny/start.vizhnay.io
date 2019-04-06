@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { RefreshContext } from '@/state/context/RefreshContext';
 import { AuthContext } from '@/state/context/AuthContext';
 import Card, { CardHeader, CardBody, CardFooter } from '@/components/Card/Card';
+import Loader from '@/components/Loader/Loader';
 import {
   form,
   formGroup,
@@ -30,7 +31,7 @@ const UserFormSchema = Yup.object().shape({
   password: Yup.string().required('A password is required.'),
 });
 
-const UserForm = ({ toggleVisibility }) => {
+const UserForm = ({ toggleClose }) => {
   const [formType, setFormType] = useState('login');
   const [serverError, setServerError] = useState('');
   const [refresh, toggleRefresh] = useContext(RefreshContext);
@@ -66,8 +67,7 @@ const UserForm = ({ toggleVisibility }) => {
               store.set('token', jwt);
               setAuth(true);
               toggleRefresh(!refresh);
-              setSubmitting(false);
-              toggleVisibility(false);
+              toggleClose();
             }
           }}
           render={({ values, errors, handleSubmit, handleChange, resetForm, isSubmitting }) => (
@@ -107,21 +107,25 @@ const UserForm = ({ toggleVisibility }) => {
                   <p className={errorMessage}>{serverError}</p>
                 </div>
               )}
-              <div className={buttonGroup}>
-                <button
-                  className={cancelButton}
-                  onClick={() => {
-                    resetForm();
-                    toggleVisibility(false);
-                  }}
-                  type="button"
-                >
-                  Cancel
-                </button>
-                <button className={submitButton} type="submit">
-                  {formType === 'login' ? 'Login' : 'Register'}
-                </button>
-              </div>
+              {isSubmitting ? (
+                <Loader />
+              ) : (
+                <div className={buttonGroup}>
+                  <button
+                    className={cancelButton}
+                    onClick={() => {
+                      resetForm();
+                      toggleClose();
+                    }}
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                  <button className={submitButton} type="submit">
+                    {formType === 'login' ? 'Login' : 'Register'}
+                  </button>
+                </div>
+              )}
             </form>
           )}
           validationSchema={UserFormSchema}
@@ -143,7 +147,7 @@ const UserForm = ({ toggleVisibility }) => {
 };
 
 UserForm.propTypes = {
-  toggleVisibility: PropTypes.func.isRequired,
+  toggleClose: PropTypes.func.isRequired,
 };
 
 export default UserForm;
