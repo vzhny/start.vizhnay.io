@@ -4,7 +4,6 @@
 $drawer-bg: #33384d;
 
 .sideMenu {
-  visibility: hidden;
   position: absolute;
   top: 0;
   right: 0;
@@ -45,7 +44,6 @@ $drawer-bg: #33384d;
 }
 
 .open {
-  visibility: visible;
   transform: translate3d(0, 0, 0);
 }
 
