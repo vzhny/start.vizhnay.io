@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card, { CardBody } from '@/components/Card/Card';
-import { link } from './Collection.module.scss';
+import Link from '@/containers/Link/Link';
+
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 const Collection = ({ category, links }) => {
   return (
     <Card>
       <CardBody>
         {links.map(({ title, url, linkId }) => (
-          <a key={linkId} className={link} href={url}>
-            {title}
-          </a>
+          <Link key={linkId} linkId={linkId} title={title} url={url} />
         ))}
       </CardBody>
     </Card>
