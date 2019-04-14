@@ -41,6 +41,19 @@ $drawer-bg: #33384d;
   &:focus {
     outline: 0;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    border: 2px solid $secondary;
+    background-color: $drawer-bg;
+    color: $secondary;
+
+    &:hover {
+      border: 2px solid $secondary;
+      background-color: $drawer-bg;
+      color: $secondary;
+    }
+  }
 }
 
 .open {
