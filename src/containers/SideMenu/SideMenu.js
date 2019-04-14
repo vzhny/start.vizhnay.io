@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import clsx from 'clsx';
 import useAnimation from '@/state/hooks/useAnimation';
 import { AuthContext } from '@/state/context/AuthContext';
+import { LinksContext } from '@/state/context/LinksContext';
 import { EditLinksContext } from '@/state/context/EditLinksContext';
 import Backdrop from '@/components/Backdrop/Backdrop';
 import Modal from '@/components/Modal/Modal';
@@ -21,6 +22,7 @@ const SideMenu = () => {
   const [[sideMenuVisible, animateSideMenu], toggleSideMenu] = useAnimation();
   const [[modalVisible, animateModal], toggleModal] = useAnimation();
   const [auth] = useContext(AuthContext);
+  const [{ links }] = useContext(LinksContext);
   const [, toggleEditLinks] = useContext(EditLinksContext);
 
   const handleEscKey = event => {
@@ -78,6 +80,7 @@ const SideMenu = () => {
                   </button>
                   <button
                     className={sideMenuButton}
+                    disabled={links.length === 0}
                     onClick={() => closeAfterClick({ toggleModal: false })}
                     type="button"
                   >
