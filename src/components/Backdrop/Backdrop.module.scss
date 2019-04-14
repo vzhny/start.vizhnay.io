@@ -2,7 +2,6 @@
 @import '~@/styles/scss/partials/abstracts';
 
 .backdrop {
-  visibility: hidden;
   position: absolute;
   top: 0;
   left: 0;
@@ -15,6 +14,5 @@
 }
 
 .visible {
-  visibility: visible;
   opacity: 0.5;
 }

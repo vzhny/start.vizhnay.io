@@ -60,7 +60,28 @@ const updateLink = ({ link, category }, { links }) => {
   return { links: updatedLinks };
 };
 
-const deleteLink = (linkId, { links }) => {};
+const deleteLink = ({ linkId, category }, { links }) => {
+  const updatedLinks = [...links];
+
+  const categoryIndex = findIndex(updatedLinks, { category });
+
+  if (categoryIndex !== -1) {
+    const linksInCategory = updatedLinks[categoryIndex].links;
+
+    const linkIndex = findIndex(linksInCategory, { linkId });
+
+    if (linkIndex !== 0) {
+      linksInCategory.splice(linkIndex, 1);
+      updatedLinks[categoryIndex] = { category, links: linksInCategory };
+    } else {
+      updatedLinks.splice(categoryIndex, 1);
+    }
+  }
+
+  store.set('links', updatedLinks);
+
+  return { links: updatedLinks };
+};
 
 const reducer = (state, { type, payload }) => {
   switch (type) {

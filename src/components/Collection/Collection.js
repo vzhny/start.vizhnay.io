@@ -10,7 +10,7 @@ const Collection = ({ category, links }) => {
     <Card>
       <CardBody>
         {links.map(({ title, url, linkId }) => (
-          <Link key={linkId} linkId={linkId} title={title} url={url} />
+          <Link key={linkId} category={category} linkId={linkId} title={title} url={url} />
         ))}
       </CardBody>
     </Card>

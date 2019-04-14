@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Backdrop from '@/components/Backdrop/Backdrop';
 import closeIcon from '@/images/close.svg';
-import { modal, open, closeButton, closeButtonIcon } from './Modal.module.scss';
+import { modalContainer, modal, open, closeButton, closeButtonIcon } from './Modal.module.scss';
 
 const Modal = ({ children, animate, toggleClose }) => {
   const handleEscKey = e => {
@@ -25,8 +26,8 @@ const Modal = ({ children, animate, toggleClose }) => {
     };
   });
 
-  return (
-    <>
+  return ReactDOM.createPortal(
+    <div className={modalContainer}>
       <Backdrop animate={animate} toggleClose={toggleClose} />
       <div className={clsx(modal, animate && open)}>
         <button className={closeButton} onClick={() => toggleClose()} type="button">
@@ -34,7 +35,8 @@ const Modal = ({ children, animate, toggleClose }) => {
         </button>
         {children}
       </div>
-    </>
+    </div>,
+    document.getElementById('app')
   );
 };
 

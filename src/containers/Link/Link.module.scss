@@ -5,6 +5,7 @@
   width: 100%;
   position: relative;
   text-align: center;
+  text-transform: lowercase;
 }
 
 .link {
@@ -37,6 +38,7 @@
   transition: all 150ms ease-out;
 
   &:hover {
+    cursor: pointer;
     opacity: 1;
     transition: all 150ms ease-in;
   }
@@ -52,4 +54,45 @@
   @extend .buttonIcon;
 
   height: 100%;
+}
+
+.modalButtonGroup {
+  width: 100%;
+  display: flex;
+}
+
+.modalButton {
+  flex-basis: 50%;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid $dark;
+  background-color: $white;
+  color: $dark;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+    transition: all 200ms ease-in;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.cancelButton {
+  @extend .modalButton;
+  margin-right: 4px;
+}
+
+.submitButton {
+  @extend .modalButton;
+  margin-left: 4px;
+
+  &:hover {
+    background-color: $success;
+    color: $dark;
+    transition: all 200ms ease-in;
+  }
 }
