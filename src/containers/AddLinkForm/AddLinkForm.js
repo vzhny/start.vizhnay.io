@@ -69,7 +69,6 @@ const AddLinkForm = ({ toggleClose }) => {
             } else {
               dispatch({ type: 'ADD_LINK', payload: response.data });
               toggleRefresh(!refresh);
-              resetForm();
               toggleClose();
             }
           }}
@@ -145,14 +144,7 @@ const AddLinkForm = ({ toggleClose }) => {
                 <Loader />
               ) : (
                 <div className={buttonGroup}>
-                  <button
-                    className={cancelButton}
-                    onClick={() => {
-                      toggleClose();
-                      resetForm();
-                    }}
-                    type="button"
-                  >
+                  <button className={cancelButton} onClick={() => toggleClose()} type="button">
                     Cancel
                   </button>
                   <button className={submitButton} type="submit">

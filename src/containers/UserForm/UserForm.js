@@ -111,14 +111,7 @@ const UserForm = ({ toggleClose }) => {
                 <Loader />
               ) : (
                 <div className={buttonGroup}>
-                  <button
-                    className={cancelButton}
-                    onClick={() => {
-                      resetForm();
-                      toggleClose();
-                    }}
-                    type="button"
-                  >
+                  <button className={cancelButton} onClick={() => toggleClose()} type="button">
                     Cancel
                   </button>
                   <button className={submitButton} type="submit">
