@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import to from 'await-to-js';
@@ -22,11 +22,13 @@ import {
   cancelButton,
   submitButton,
 } from './Link.module.scss';
+import EditLinkForm from '../EditLinkForm/EditLinkForm';
 
 const Link = ({ linkId, title, url, category, ...props }) => {
   const [[modalVisible, animateModal], toggleModal] = useAnimation();
   const [canEditLinks] = useContext(EditLinksContext);
   const [refresh, toggleRefresh] = useContext(RefreshContext);
+  const [editMode, setEditMode] = useState('edit');
   const [, dispatch] = useContext(LinksContext);
 
   const deleteLink = async () => {
@@ -46,6 +48,16 @@ const Link = ({ linkId, title, url, category, ...props }) => {
     toggleRefresh(!refresh);
   };
 
+  const handleEditLink = () => {
+    setEditMode('edit');
+    toggleModal();
+  };
+
+  const handleDeleteLink = () => {
+    setEditMode('delete');
+    toggleModal();
+  };
+
   return (
     <div className={linkContainer}>
       <a className={link} {...props} href={url} rel="noopener noreferrer" target="_blank">
@@ -53,33 +65,37 @@ const Link = ({ linkId, title, url, category, ...props }) => {
       </a>
       {canEditLinks && (
         <div className={buttonGroup}>
-          <button className={button} onClick={() => {}} type="button">
+          <button className={button} onClick={() => handleEditLink()} type="button">
             <img alt="Edit Icon" className={editButtonIcon} src={EditIcon} />
           </button>
-          <button className={button} onClick={() => toggleModal()} type="button">
+          <button className={button} onClick={() => handleDeleteLink()} type="button">
             <img alt="Delete Icon" className={deleteButtonIcon} src={DeleteIcon} />
           </button>
         </div>
       )}
       {modalVisible && (
         <Modal animate={animateModal} toggleClose={toggleModal}>
-          <Card>
-            <CardHeader>
-              <h3>Delete Link</h3>
-            </CardHeader>
-            <CardBody>
-              <p style={{ marginBottom: '1rem' }}>Are you sure you want to delete this link?</p>
-              <p style={{ fontWeight: '600' }}>{url}</p>
-              <div className={modalButtonGroup}>
-                <button className={cancelButton} onClick={() => toggleModal()} type="button">
-                  No
-                </button>
-                <button className={submitButton} onClick={() => deleteLink()} type="button">
-                  Yes
-                </button>
-              </div>
-            </CardBody>
-          </Card>
+          {editMode === 'edit' ? (
+            <EditLinkForm category={category} linkId={linkId} title={title} toggleClose={toggleModal} url={url} />
+          ) : (
+            <Card>
+              <CardHeader>
+                <h3>Delete Link</h3>
+              </CardHeader>
+              <CardBody>
+                <p style={{ marginBottom: '1rem' }}>Are you sure you want to delete this link?</p>
+                <p style={{ fontWeight: '600' }}>{url}</p>
+                <div className={modalButtonGroup}>
+                  <button className={cancelButton} onClick={() => toggleModal()} type="button">
+                    No
+                  </button>
+                  <button className={submitButton} onClick={() => deleteLink()} type="button">
+                    Yes
+                  </button>
+                </div>
+              </CardBody>
+            </Card>
+          )}
         </Modal>
       )}
     </div>
