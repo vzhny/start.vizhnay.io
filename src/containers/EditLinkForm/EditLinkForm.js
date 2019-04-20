@@ -23,13 +23,13 @@ import {
   buttonGroup,
   cancelButton,
   submitButton,
-} from './AddLinkForm.module.scss';
+} from './EditLinkForm.module.scss';
 
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
-const AddLinkFormSchema = Yup.object().shape({
+const EditLinkFormSchema = Yup.object().shape({
   title: Yup.string().required('A title is required.'),
   url: Yup.string()
     .url('Invalid URL.')
@@ -37,7 +37,7 @@ const AddLinkFormSchema = Yup.object().shape({
   category: Yup.string().required('A category is required.'),
 });
 
-const AddLinkForm = ({ toggleClose }) => {
+const EditLinkForm = ({ linkId, title, url, category: originalCategory, toggleClose }) => {
   const [serverError, setServerError] = useState('');
   const [refresh, toggleRefresh] = useContext(RefreshContext);
   const [{ links }, dispatch] = useContext(LinksContext);
@@ -46,28 +46,28 @@ const AddLinkForm = ({ toggleClose }) => {
   return (
     <Card>
       <CardHeader style={{ paddingTop: '1.3rem' }}>
-        <h3>Add a New Link</h3>
+        <h3>Edit Link</h3>
       </CardHeader>
       <CardBody>
         <Formik
           initialValues={{
-            title: '',
-            url: '',
-            category: '',
+            title,
+            url,
+            category: originalCategory,
           }}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             const token = store.get('token');
             const [error, response] = await to(
-              axios.post(`/links`, values, {
+              axios.put(`/links/${linkId}`, values, {
                 headers: { Authorization: token },
               })
             );
 
             if (error) {
-              setServerError('There was an error adding the link, please try again later.');
+              setServerError('There was an error editing the link, please try again later.');
               setSubmitting(false);
             } else {
-              dispatch({ type: 'ADD_LINK', payload: response.data });
+              dispatch({ type: 'UPDATE_LINK', payload: { link: { linkId, ...values }, originalCategory } });
               toggleRefresh(!refresh);
               toggleClose();
             }
@@ -121,15 +121,15 @@ const AddLinkForm = ({ toggleClose }) => {
                   value={values.category}
                 />
                 <div className={clsx(dropdownContainer, showDropdown && show)}>
-                  {links.map(({ category }) => {
+                  {links.map(({ category: _category }) => {
                     return (
                       <p
-                        key={category}
+                        key={_category}
                         className={clsx(dropdownOption)}
-                        data-id={category}
+                        data-id={_category}
                         onClick={e => setFieldValue('category', e.currentTarget.dataset.id)}
                       >
-                        {category}
+                        {_category}
                       </p>
                     );
                   })}
@@ -148,21 +148,25 @@ const AddLinkForm = ({ toggleClose }) => {
                     Cancel
                   </button>
                   <button className={submitButton} type="submit">
-                    Add Link
+                    Save Link
                   </button>
                 </div>
               )}
             </form>
           )}
-          validationSchema={AddLinkFormSchema}
+          validationSchema={EditLinkFormSchema}
         />
       </CardBody>
     </Card>
   );
 };
 
-AddLinkForm.propTypes = {
+EditLinkForm.propTypes = {
+  linkId: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   toggleClose: PropTypes.func.isRequired,
 };
 
-export default AddLinkForm;
+export default EditLinkForm;
