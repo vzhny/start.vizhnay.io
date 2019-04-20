@@ -39,20 +39,43 @@ const addNewLink = (link, { links }) => {
   return { links: updatedLinks };
 };
 
-const updateLink = ({ link, category }, { links }) => {
-  const { linkId } = link;
+const updateLink = ({ link, originalCategory }, { links }) => {
+  const { linkId, title, url, category } = link;
   const updatedLinks = [...links];
 
-  const categoryIndex = findIndex(updatedLinks, { category });
+  const currentCategoryIndex = findIndex(updatedLinks, { category });
+  const originalCategoryIndex = findIndex(updatedLinks, { category: originalCategory });
 
-  if (categoryIndex !== -1) {
-    const linksInCategory = updatedLinks[categoryIndex].links;
+  const numberOfLinksInCurrentCategory = updatedLinks[currentCategoryIndex].links.length;
+  const numberOfLinksInOriginalCategory = updatedLinks[originalCategoryIndex].links.length;
 
-    const linkIndex = findIndex(linksInCategory, { linkId });
+  if (currentCategoryIndex >= 0) {
+    // category exists
+    const linkIndex = findIndex(numberOfLinksInCurrentCategory, { linkId });
 
-    linksInCategory[linkIndex] = link;
+    if (linkIndex >= 0) {
+      // link exists in the category; update it
+      numberOfLinksInCurrentCategory[linkIndex] = { linkId, title, url };
+      updatedLinks[currentCategoryIndex] = { category, links: numberOfLinksInCurrentCategory };
+    } else {
+      // link doesn't exist, push it
+      updatedLinks[currentCategoryIndex].links.push({
+        linkId,
+        title,
+        url,
+      });
+    }
+  } else {
+    // category doesn't exist, create it and push link
+    updatedLinks.push({
+      category,
+      links: [{ linkId, title, url }],
+    });
+  }
 
-    updatedLinks[categoryIndex] = { category, links: linksInCategory[linkIndex] };
+  // check if original category has only one link -- if so, splice it
+  if (numberOfLinksInOriginalCategory === 1) {
+    updatedLinks.splice(originalCategoryIndex, 1);
   }
 
   store.set('links', updatedLinks);
@@ -65,14 +88,14 @@ const deleteLink = ({ linkId, category }, { links }) => {
 
   const categoryIndex = findIndex(updatedLinks, { category });
 
-  if (categoryIndex !== -1) {
-    const linksInCategory = updatedLinks[categoryIndex].links;
+  if (categoryIndex >= 0) {
+    const categoryLinks = updatedLinks[categoryIndex].links;
 
-    const linkIndex = findIndex(linksInCategory, { linkId });
+    const linkIndex = findIndex(categoryLinks, { linkId });
 
     if (linkIndex !== 0) {
-      linksInCategory.splice(linkIndex, 1);
-      updatedLinks[categoryIndex] = { category, links: linksInCategory };
+      categoryLinks.splice(linkIndex, 1);
+      updatedLinks[categoryIndex] = { category, links: categoryLinks };
     } else {
       updatedLinks.splice(categoryIndex, 1);
     }
