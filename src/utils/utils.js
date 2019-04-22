@@ -1,5 +1,7 @@
 import store from 'store';
 
+/* eslint-disable no-restricted-globals */
+
 const getGreeting = currentHour => {
   let greeting = 'Good Evening!';
 
@@ -23,7 +25,13 @@ const setInitialLocalStorage = () => {
 const getStatusCode = message => {
   const split = message.split(' ');
   const { length } = split;
-  return split[length - 1];
+  const statusCode = parseInt(split[length - 1], 10);
+
+  if (isNaN(statusCode)) {
+    return 0;
+  }
+
+  return statusCode;
 };
 
 export { getGreeting, setInitialLocalStorage, getStatusCode };
