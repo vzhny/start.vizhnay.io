@@ -5,7 +5,7 @@ import store from 'store';
 import { RefreshContext } from '@/state/context/RefreshContext';
 import { LinksContext } from '@/state/context/LinksContext';
 import { AuthContext } from '@/state/context/AuthContext';
-import { setInitialLocalStorage } from '@/utils/utils';
+import { setInitialLocalStorage, getStatusCode } from '@/utils/utils';
 import Card, { CardBody } from '@/components/Card/Card';
 import Collection from '@/components/Collection/Collection';
 import { linksContainer } from './LinksContainer.module.scss';
@@ -31,7 +31,14 @@ const LinksContainer = () => {
       );
 
       if (error) {
-        setServerError('There was an error retrieving your links, please try again later.');
+        const statusCode = parseInt(getStatusCode(error.message), 10);
+
+        if (statusCode === 401) {
+          setServerError('Please re-log in in order to get your most up to date links!');
+          setAuth(false);
+        } else {
+          setServerError('There was an error retrieving your links, please try again later.');
+        }
 
         return;
       }
