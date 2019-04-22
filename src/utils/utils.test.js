@@ -1,4 +1,4 @@
-import { getGreeting } from '@/utils/utils';
+import { getGreeting, getStatusCode } from '@/utils/utils';
 
 /* eslint-disable array-callback-return */
 
@@ -17,5 +17,21 @@ describe('getGreeting', () => {
         expect(greeting).toBe('Good Evening!');
       }
     });
+  });
+});
+
+describe('getStatusCode', () => {
+  it('should return the status code at the end of an error message', () => {
+    const withStatusCode = 'This is an error message 404';
+    const statusCode = getStatusCode(withStatusCode);
+
+    expect(statusCode).toBe(404);
+  });
+
+  it('should return 0 if there is no status code', () => {
+    const withoutStatusCode = "This doesn't have a status code";
+    const noStatusCode = getStatusCode(withoutStatusCode);
+
+    expect(noStatusCode).toBe(0);
   });
 });
