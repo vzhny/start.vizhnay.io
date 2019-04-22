@@ -20,4 +20,10 @@ const setInitialLocalStorage = () => {
   }
 };
 
-export { getGreeting, setInitialLocalStorage };
+const getStatusCode = message => {
+  const split = message.split(' ');
+  const { length } = split;
+  return split[length - 1];
+};
+
+export { getGreeting, setInitialLocalStorage, getStatusCode };
