@@ -1,6 +1,6 @@
 {
   "name": "start.vizhnay.io",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A streamlined start page, built with React, for saving users' most frequently visited websites.",
   "engines": {
     "yarn": "1.15.2"
