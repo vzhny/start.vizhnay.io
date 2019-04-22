@@ -31,7 +31,7 @@ const LinksContainer = () => {
       );
 
       if (error) {
-        const statusCode = parseInt(getStatusCode(error.message), 10);
+        const statusCode = getStatusCode(error.message);
 
         if (statusCode === 401) {
           setServerError('Please re-log in in order to get your most up to date links!');
