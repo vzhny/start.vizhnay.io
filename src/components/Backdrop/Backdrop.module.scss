@@ -1,0 +1,18 @@
+@import '~@/styles/scss/partials/variables';
+@import '~@/styles/scss/partials/abstracts';
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: $dark;
+  opacity: 0;
+  z-index: 998;
+  transition: all 500ms ease;
+}
+
+.visible {
+  opacity: 0.5;
+}

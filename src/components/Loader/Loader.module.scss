@@ -1,0 +1,46 @@
+@import '~@/styles/scss/partials/variables';
+@import '~@/styles/scss/partials/abstracts';
+
+.loader {
+  text-align: center;
+
+  > div {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 100%;
+    display: inline-block;
+    animation: bounce-delay 1.4s infinite ease-in-out both;
+  }
+
+  .bounce1 {
+    animation-delay: -0.32s;
+  }
+
+  .bounce2 {
+    animation-delay: -0.16s;
+  }
+
+  .bounce3 {
+    animation-delay: 0s;
+  }
+}
+
+.dark {
+  background-color: $black;
+}
+
+.light {
+  background-color: $white;
+}
+
+@keyframes bounce-delay {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}

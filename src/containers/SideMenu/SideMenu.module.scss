@@ -1,0 +1,113 @@
+@import '~@/styles/scss/partials/variables';
+@import '~@/styles/scss/partials/abstracts';
+
+$drawer-bg: #33384d;
+
+.sideMenu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 300px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: $drawer-bg;
+  color: $white;
+  z-index: 999;
+  transform: translate3d(100%, 0, 0);
+  transition: all 500ms;
+}
+
+.sideMenuList {
+  margin-top: 2.5rem;
+}
+
+.sideMenuButton {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid $white;
+  background-color: $drawer-bg;
+  color: $white;
+  margin-bottom: 1rem;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    background-color: $white;
+    color: $drawer-bg;
+    transition: all 200ms ease-in;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    border: 2px solid $secondary;
+    background-color: $drawer-bg;
+    color: $secondary;
+
+    &:hover {
+      border: 2px solid $secondary;
+      background-color: $drawer-bg;
+      color: $secondary;
+    }
+  }
+}
+
+.open {
+  transform: translate3d(0, 0, 0);
+}
+
+.hamburgerMenu {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  height: 32px;
+  width: 32px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  z-index: 1000;
+
+  &:hover {
+    cursor: pointer;
+    transition: opacity 150ms linear;
+
+    .line {
+      background-color: #848794;
+      opacity: 0.75;
+      transition: all 300ms ease-in;
+    }
+  }
+}
+
+.closeHamburgerMenu {
+  .line {
+    background-color: #848794;
+    opacity: 0.75;
+    transition: all 200ms ease-in;
+
+    &:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 6px);
+    }
+
+    &:nth-child(2) {
+      opacity: 0;
+    }
+
+    &:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+  }
+}
+
+.line {
+  height: 3px;
+  width: 100%;
+  margin-bottom: 6px;
+  background-color: #474b5e;
+  opacity: 0.5;
+  transition: all 300ms ease-out;
+}

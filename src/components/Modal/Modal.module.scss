@@ -1,0 +1,53 @@
+@import '~@/styles/scss/partials/variables';
+@import '~@/styles/scss/partials/abstracts';
+
+.modalContainer {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  opacity: 0;
+  transform: translate3d(0, -30px, 0);
+  transition: all 500ms;
+  z-index: 999;
+}
+
+.open {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.closeButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  height: 12px;
+  width: 12px;
+  background-color: transparent;
+  color: #777;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+    color: $black;
+  }
+}
+
+.closeButtonIcon {
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  transition: all 150ms ease-out;
+
+  &:hover {
+    opacity: 0.5;
+    transition: all 150ms ease-in;
+  }
+}
