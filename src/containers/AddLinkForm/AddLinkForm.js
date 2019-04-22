@@ -55,7 +55,7 @@ const AddLinkForm = ({ toggleClose }) => {
             url: '',
             category: '',
           }}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
+          onSubmit={async (values, { setSubmitting }) => {
             const token = store.get('token');
             const [error, response] = await to(
               axios.post(`/links`, values, {
@@ -72,7 +72,7 @@ const AddLinkForm = ({ toggleClose }) => {
               toggleClose();
             }
           }}
-          render={({ values, errors, handleSubmit, handleChange, setFieldValue, resetForm, isSubmitting }) => (
+          render={({ values, errors, handleSubmit, handleChange, setFieldValue, isSubmitting }) => (
             <form className={form} onSubmit={e => handleSubmit(e)}>
               <div className={formGroup}>
                 <label className={label} htmlFor="title">

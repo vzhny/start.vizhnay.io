@@ -55,7 +55,7 @@ const EditLinkForm = ({ linkId, title, url, category: originalCategory, toggleCl
             url,
             category: originalCategory,
           }}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
+          onSubmit={async (values, { setSubmitting }) => {
             const token = store.get('token');
             const [error, response] = await to(
               axios.put(`/links/${linkId}`, values, {
@@ -72,7 +72,7 @@ const EditLinkForm = ({ linkId, title, url, category: originalCategory, toggleCl
               toggleClose();
             }
           }}
-          render={({ values, errors, handleSubmit, handleChange, setFieldValue, resetForm, isSubmitting }) => (
+          render={({ values, errors, handleSubmit, handleChange, setFieldValue, isSubmitting }) => (
             <form className={form} onSubmit={e => handleSubmit(e)}>
               <div className={formGroup}>
                 <label className={label} htmlFor="title">
