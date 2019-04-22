@@ -56,7 +56,7 @@ const UserForm = ({ toggleClose }) => {
             email: '',
             password: '',
           }}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
+          onSubmit={async (values, { setSubmitting }) => {
             const [error, response] = await to(axios.post(`/auth/${formType}`, values));
 
             if (error) {
@@ -70,7 +70,7 @@ const UserForm = ({ toggleClose }) => {
               toggleClose();
             }
           }}
-          render={({ values, errors, handleSubmit, handleChange, resetForm, isSubmitting }) => (
+          render={({ values, errors, handleSubmit, handleChange, isSubmitting }) => (
             <form className={form} onSubmit={e => handleSubmit(e)}>
               <div className={formGroup}>
                 <label className={label} htmlFor="email">
